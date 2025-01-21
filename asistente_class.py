@@ -46,13 +46,12 @@ class Asistente:
         result = self.chat.send_message(text)
         return result.text.replace("*","").replace("/","")
     
-    def talk(text):
-    model = gTTS(text,lang= self.vosk_model_lang)
-    model.save("audio.mp3")
-    print('todo chevere')
-    try:
-        playsound.playsound('C:/Users/Ada-Amarillo/Desktop/jesus/Constructores/proyecto-1/stan-jesu/audio.mp3')
-    except Exception as e:
-        print("No se pudo reproducir el audio")
-    os.remove(self.audio_path)
-        
+    def talk(self,text):
+        model = gTTS(text,lang= self.vosk_model_lang)
+        model.save("audio.mp3")
+        print('todo chevere')
+        try:
+            playsound.playsound('C:/Users/Ada-Amarillo/Desktop/jesus/Constructores/proyecto-1/stan-jesu/audio.mp3')
+        except Exception as e:
+            print("No se pudo reproducir el audio")
+        os.remove(self.audio_path)
