@@ -45,7 +45,9 @@ model= genai.GenerativeModel(
     generation_config =config,
     tools=[buscar_un_video]
 )
+
 chat=model.start_chat(enable_automatic_function_calling=True)
+
 def answer(text:str):
     global activado
     result = chat.send_message(text)
