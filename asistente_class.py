@@ -3,6 +3,10 @@ import playsound
 from vosk import Model, KaldiRecognizer
 import os, json, sys, queue, sounddevice
 from gtts import gTTS
+import docx
+import subprocess
+from pptx import Presentation
+import pptx
 
 
 class Asistente:
@@ -137,14 +141,63 @@ class Asistente:
                     
                 else:
                     partial = json.loads(recognizer.PartialResult())['partial']
-        
+                print (partial)
                         
                 # Check if silence has been detected for enough time
-                
-            
 
-    
-                
+    def crear_un_proyecto_web(self, caracteristicas_pagina:str, nombre:str, ruta_proyecto:str):
+        """
+        Description:
+            Crea una pagina web y lo abre en el navegador y en VS code, cuando el usuario diga: 
+            Crea una pagina sobre..., crea un sitio web..., crea una pagina...
+        Args: 
+            caracteristicas_pagina: Es el tema de la pagina web
+            nombre: Es el nombre del proyecto
+            ruta_proyecto: Es la ruta donde se creara el proyecto
+        """
+        nombre_proyecto = nombre
+        nombre_ruta_proyecto = ruta_proyecto
+        carpeta_nativa= os.path.join(os.path.expanduser("~"), nombre_ruta_proyecto)
+        carpeta_final= os.path.join(carpeta_nativa, nombre_proyecto)
+        os.makedirs(carpeta_final, exist_ok=True)
+        codigo_html = self.model.generate_content([caracteristicas_pagina, "Crea un pagina web que incluya caractristicas que pida el usuario, utilizando html, css y java script pero no incluyas texto innecesario ni explicaciones, ahora solamente tienes que regresar el codigo html en donde vas a utlizar la cdn de bootstrap y codigo css que estaran en el mismo index html."])
+        codigo_html = codigo_html.text.split("```html")[1].split("```")[0]
+        with open(os.path.join(carpeta_final, "index.html"), "w", encoding="utf-8") as archivo_html:
+            archivo_html.write(codigo_html)
+        os.system(f"start msedge {os.path.join(carpeta_final, 'index.html')}")
+        os.system(f"start Code {carpeta_final}")
+
+        pass             
+            
+    def escribir_un_documento(self,tema,str):
+        """
+        Description:
+            Empieza a escrbir en un documento word sobre un tema que te pida el usuario. Ejemplo, 
+            Quiero que hagas un documento word sobre... o haz un documento sobre...
+        Args:
+            tema: Es el tema del documento 
+        """
+        result = self.model.generate_content([tema, "Crea un texto sobre algun tema que diga el usuario, tambien pondras algunos elementos que ayuden a mejorar la estructura del documento, utilizando letra negrita con palabras importantes por ejemplo. Intenta no utilizar caracteres especiales como Ñ o á."])
+        codigo = result.text.split("```python")[1].replace("```", "").replace("")
+        with open ("documento.py", "w") as f:
+            f.write(codigo)
+        subprocess.run("python", "documento.py")
+
+    def crear_una_presentacion (self,tema:str):
+        """
+        Esta es una funcion que crea una presentacion de power point cuando el usuario dice
+        "crea una presentacion sobre..." o algo asi
+
+        Arg:
+        tema: es el tema de la presentacion
+        """
+
+        result = self.model.generate_content([ "Crea un presentacion en power point sobre algun tema que diga el usuario, utilizando python-pptx, agregale ciertos elementos para que la presentacion se vea mas agradable y que se pueda enteder mas facil."])
+        codigo = result.text.split("```")[1].replace("python", "").replace("�", "")
+        with open ("presentacion.py", "w") as f:
+            f.write(codigo)
+        subprocess.run("python", "presentacion.py")
+
 gemini = Asistente("gemini-1.5-flash","audio.mp3",
                     "./models/vosk-model-small-es-0.42",
                     "hola",
@@ -159,6 +212,10 @@ gemini = Asistente("gemini-1.5-flash","audio.mp3",
                     API="AIzaSyAKIXenE4WIyx96A9T6WgLCD1feLk-DOYY", 
                     vosk_model_lang="es",
                     )
+
+
+
+gemini.crear_una_presentacion("el agua")
 
 
 
