@@ -46,7 +46,7 @@ def crear_proyecto_web(características_pagina:str, nombre:str):
     """
 
     try:
-        nombre_proyecto = nombre
+        nombre_proyecto = nombre    
 
         escritorio = os.path.join(os.path.expanduser("~"), "Desktop")
         ruta_proyecto = os.path.join(escritorio, nombre_proyecto)
