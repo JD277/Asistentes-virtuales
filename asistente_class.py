@@ -7,7 +7,7 @@ import docx
 import subprocess
 from pptx import Presentation
 import pptx
-
+from pytube import YouTube
 
 class Asistente:
     def __init__(self, model_name: 
@@ -215,6 +215,7 @@ class Asistente:
             print(f"Error al crear la presentación: {e}")
 
     def escribir_una_nota(self, directorio_principal:str,carpeta:str,tema:str):
+
         """
             Description:
                 Esta funcion crea una nota txt cuando el usuario expresa que quiere crear una nota sobre un tema , 
@@ -232,23 +233,54 @@ class Asistente:
         with open(os.path.join(carpeta_nota, f"{tema}.txt"), "w", encoding="utf-8") as archivo:
             archivo.write(result)
         subprocess.run([ 'notepad', os.path.join(carpeta_nota, f"{tema}.text")])
-    def buscar_un_video(self):
+    
+    def buscar_un_video(self, busqueda:str):
         """
         Description:
 
         Ags:
-        
-        """        
+                busqueda: Es la busqueda que el usuario quiere hacer en youtube
+        """  
+        print("iniciando")      
         url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={busqueda}&type=video&key=AIzaSyC5cxHnowJ54rkppj8TMaRvD8HD8dnx6Ew&maxResults=1"
         reply = requests.get(url)
         data = reply.json()
         if reply.status_code == 200:
             print("Listo")
-            if "items" in dara and len(data["items"]) > 0:
+            if "items" in data and len(data["items"]) > 0:
                 pass
-        
+            video_id = data["items"][0]["videoId"]
         video_url = f"https://www.youtube.com/watch?v={id}" 
         subprocess.run(['msedge', video_url])
+
+    def descargar_un_video(self,video_url:str):
+        """
+        Description:
+
+    
+        Args:
+            video_url: Es al url del video que el usuario quiere descargar    
+        """
+
+        yld_ops = {
+            'format': ' bestvideo',
+            'outtmpl': f'{ruta}/%(title)s.%(ext)s',
+            'mergue_output_format': 'mp4'
+        }
+        try:
+            print("iniciando")      
+            url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={busqueda}&type=video&key=AIzaSyC5cxHnowJ54rkppj8TMaRvD8HD8dnx6Ew&maxResults=1"
+            reply = requests.get(url)
+            data = reply.json()
+            if reply.status_code == 200:
+                print("Listo")
+                if "items" in data and len(data["items"]) > 0:
+                    video_id = data["items"][0]["videoId"]
+                    video_url = f"https://www.youtube.com/watch?v={id}"
+                    with yt_dlp.YoutubeDL(yld_ops) as ydl:
+                        ydl.download([video_url]) 
+        except Exception as e:
+            print("Error al descargar el video")
 
 gemini = Asistente("gemini-1.5-flash","audio.mp3",
                     "./models/vosk-model-small-es-0.42",
