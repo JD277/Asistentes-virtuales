@@ -1,7 +1,7 @@
 import google.generativeai as genai
 import playsound
 from vosk import Model, KaldiRecognizer
-import os, json, sys, queue, sounddevice
+import os, json, sys, queue, sounddevice, requests
 from gtts import gTTS
 import docx
 import subprocess
@@ -192,11 +192,63 @@ class Asistente:
         tema: es el tema de la presentacion
         """
 
-        result = self.model.generate_content([ "Crea un presentacion en power point sobre algun tema que diga el usuario, utilizando python-pptx, agregale ciertos elementos para que la presentacion se vea mas agradable y que se pueda enteder mas facil."])
-        codigo = result.text.split("```")[1].replace("python", "").replace("�", "")
-        with open ("presentacion.py", "w") as f:
-            f.write(codigo)
-        subprocess.run("python", "presentacion.py")
+        try:
+            resultado = self.model.generate_content([
+                f"Créame una presentación de PowerPoint sobre {tema} en inglés",
+                "Recuerda que tu resultado será un script de Python que con la librería pptx genere una presentación de PowerPoint, SOLO DEVUELVE EL CÓDIGO y recuerda al final abrir dicho archivo pptx usando la librería OS.",
+                "En las cadenas de textos ni en los comentarios no uses caracteres especiales ni uses acentos como 'ñ' o 'á' y no coloques imagenes, has que la presentacion utilise dos estilos de letra y estilos visuales para la presentacion."
+            ])
+
+            # Verifica si el resultado contiene un bloque de código
+            if "```" in resultado.text:
+                codigo = resultado.text.split("```")[1].replace("python", "").replace("�", "")
+            else:
+                codigo = resultado.text  # Si no hay bloque de código, usa el texto completo
+
+            # Escribe el código en un archivo Python
+            with open("presentacion2.py", "w", encoding="utf-8") as f:
+                f.write(codigo)
+
+            # Ejecuta el archivo Python generado
+            subprocess.run([sys.executable, "presentacion2.py"])
+        except Exception as e:
+            print(f"Error al crear la presentación: {e}")
+
+    def escribir_una_nota(self, directorio_principal:str,carpeta:str,tema:str):
+        """
+            Description:
+                Esta funcion crea una nota txt cuando el usuario expresa que quiere crear una nota sobre un tema , 
+                en un directorio indicado por el usuario, por ejemplo, "crea una nota sobre..."
+            Asrs:
+                directorio_principal: Es el directorio principal donde se creara la carpeta
+                carpeta: Es el nombre de la carpeta
+                tema: Es el tema de la nota
+        """
+        result = self.model.generate_content([f"""Crea una nota sobre {tema}"""])
+        carpeta_nativa = os.path.join(os.path.expanduser("~"), directorio_principal)
+        carpeta_nota = os.path.join(carpeta_nativa, carpeta)
+        os.makedirs(carpeta_nota, exist_ok=True)
+        result = result.text.replace("#", "").replace("*", "")
+        with open(os.path.join(carpeta_nota, f"{tema}.txt"), "w", encoding="utf-8") as archivo:
+            archivo.write(result)
+        subprocess.run([ 'notepad', os.path.join(carpeta_nota, f"{tema}.text")])
+    def buscar_un_video(self):
+        """
+        Description:
+
+        Ags:
+        
+        """        
+        url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={busqueda}&type=video&key=AIzaSyC5cxHnowJ54rkppj8TMaRvD8HD8dnx6Ew&maxResults=1"
+        reply = requests.get(url)
+        data = reply.json()
+        if reply.status_code == 200:
+            print("Listo")
+            if "items" in dara and len(data["items"]) > 0:
+                pass
+        
+        video_url = f"https://www.youtube.com/watch?v={id}" 
+        subprocess.run(['msedge', video_url])
 
 gemini = Asistente("gemini-1.5-flash","audio.mp3",
                     "./models/vosk-model-small-es-0.42",
