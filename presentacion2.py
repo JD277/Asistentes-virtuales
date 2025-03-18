@@ -1,138 +1,124 @@
 
 from pptx import Presentation
-from pptx.util import Inches, Pt
-from pptx.enum.text import PP_ALIGN
+from pptx.util import Inches
+from pptx.enum.shapes import MSO_SHAPE
 from pptx.dml.color import RGBColor
-import os
+from pptx.enum.text import PP_ALIGN
 
-# Create a presentation object
+# Crear una nueva presentacion
 prs = Presentation()
 
-# --- Slide 1: Title Slide ---
-slide_layout = prs.slide_layouts[0]  # Title slide layout
+# Slide 1: Titulo
+slide_layout = prs.slide_layouts[0]
 slide = prs.slides.add_slide(slide_layout)
 title = slide.shapes.title
 subtitle = slide.placeholders[1]
 
-title.text = "The Legend of Zelda: A Journey Through Hyrule"
-subtitle.text = "An Overview of the Iconic Series"
+title.text = "Pizza: A Culinary Delight"
+subtitle.text = "An Overview of Pizza"
 
-# --- Slide 2: Introduction ---
-slide_layout = prs.slide_layouts[1]  # Title and Content layout
-slide = prs.slides.add_slide(slide_layout)
-title = slide.shapes.title
-body = slide.placeholders[1]
-
-title.text = "What is The Legend of Zelda?"
-
-tf = body.text_frame
-tf.text = "A beloved action-adventure fantasy series created by Nintendo."
-
-p = tf.add_paragraph()
-p.text = "Follows the hero Link on his quest to save Princess Zelda and Hyrule from the evil Ganon (or Ganondorf)."
-p.alignment = PP_ALIGN.LEFT
-
-p = tf.add_paragraph()
-p.text = "Known for its exploration, puzzles, combat, and compelling story."
-p.alignment = PP_ALIGN.LEFT
-
-# --- Slide 3: Key Characters ---
+# Slide 2: History of Pizza
 slide_layout = prs.slide_layouts[1]
 slide = prs.slides.add_slide(slide_layout)
 title = slide.shapes.title
 body = slide.placeholders[1]
 
-title.text = "Key Characters"
+title.text = "A Brief History"
 
 tf = body.text_frame
-tf.text = "Link: The Hero of Hyrule, destined to wield the Master Sword and defeat evil."
-
+tf.text = "Pizza has a long and rich history."
 p = tf.add_paragraph()
-p.text = "Zelda: The Princess of Hyrule, often possessing wisdom and magical abilities."
-p.alignment = PP_ALIGN.LEFT
-
+p.text = "Its roots can be traced back to ancient civilizations."
 p = tf.add_paragraph()
-p.text = "Ganon/Ganondorf: The primary antagonist, a powerful sorcerer seeking to conquer Hyrule."
-p.alignment = PP_ALIGN.LEFT
+p.text = "Modern pizza originated in Naples, Italy, in the 18th century."
+p = tf.add_paragraph()
+p.text = "It quickly became popular among the working class."
 
-# --- Slide 4: Core Gameplay Elements ---
+# Slide 3: Types of Pizza
 slide_layout = prs.slide_layouts[1]
 slide = prs.slides.add_slide(slide_layout)
 title = slide.shapes.title
 body = slide.placeholders[1]
 
-title.text = "Core Gameplay Elements"
+title.text = "Popular Types of Pizza"
 
 tf = body.text_frame
-tf.text = "Exploration: Discovering Hyrule's vast landscapes, dungeons, and secrets."
-
+tf.text = "Neapolitan: Simple, with San Marzano tomatoes and mozzarella."
 p = tf.add_paragraph()
-p.text = "Combat: Engaging enemies with swords, bows, and other weapons."
-p.alignment = PP_ALIGN.LEFT
-
+p.text = "New York-Style: Large, thin, and foldable slices."
 p = tf.add_paragraph()
-p.text = "Puzzles: Solving intricate puzzles within dungeons and the overworld."
-p.alignment = PP_ALIGN.LEFT
-
+p.text = "Sicilian: Thick crust, rectangular shape."
 p = tf.add_paragraph()
-p.text = "Items and Equipment: Collecting powerful items like the Hookshot, Bombs, and Bow."
-p.alignment = PP_ALIGN.LEFT
+p.text = "Chicago Deep-Dish: Thick crust filled with cheese and toppings."
 
-# --- Slide 5: Recurring Themes ---
+# Slide 4: Ingredients
 slide_layout = prs.slide_layouts[1]
 slide = prs.slides.add_slide(slide_layout)
 title = slide.shapes.title
 body = slide.placeholders[1]
 
-title.text = "Recurring Themes"
+title.text = "Key Ingredients"
 
 tf = body.text_frame
-tf.text = "The Triforce: A symbol of power, wisdom, and courage, often sought after by Ganon."
-
+tf.text = "Dough: Typically made from flour, water, yeast, and salt."
 p = tf.add_paragraph()
-p.text = "The Master Sword: The blade of evil's bane, capable of vanquishing Ganon."
-p.alignment = PP_ALIGN.LEFT
-
+p.text = "Sauce: Usually tomato-based, seasoned with herbs and spices."
 p = tf.add_paragraph()
-p.text = "The Cycle of Reincarnation: Link, Zelda, and Ganon are often reborn to repeat their roles."
-p.alignment = PP_ALIGN.LEFT
+p.text = "Cheese: Mozzarella is the most common, but others are used."
+p = tf.add_paragraph()
+p.text = "Toppings: Endless possibilities, from pepperoni to vegetables."
 
-# --- Slide 6: Notable Games ---
+# Slide 5: Nutritional Value
 slide_layout = prs.slide_layouts[1]
 slide = prs.slides.add_slide(slide_layout)
 title = slide.shapes.title
 body = slide.placeholders[1]
 
-title.text = "Notable Games"
+title.text = "Nutritional Information"
 
 tf = body.text_frame
-tf.text = "The Legend of Zelda (NES, 1986): The game that started it all."
-
+tf.text = "Pizza can be a source of carbohydrates, protein, and fat."
 p = tf.add_paragraph()
-p.text = "The Legend of Zelda: Ocarina of Time (N64, 1998): Widely considered one of the greatest games of all time."
-p.alignment = PP_ALIGN.LEFT
-
+p.text = "Nutritional value varies depending on the ingredients and portion size."
 p = tf.add_paragraph()
-p.text = "The Legend of Zelda: Breath of the Wild (Switch, 2017): A revolutionary open-world adventure."
-p.alignment = PP_ALIGN.LEFT
+p.text = "Choose whole-wheat crust and load up on vegetables for a healthier option."
+p = tf.add_paragraph()
+p.text = "Be mindful of portion sizes and frequency of consumption."
 
-# --- Slide 7: Conclusion ---
-slide_layout = prs.slide_layouts[5]  # Blank Slide
+# Slide 6: World Wide Popularity
+slide_layout = prs.slide_layouts[1]
+slide = prs.slides.add_slide(slide_layout)
+title = slide.shapes.title
+body = slide.placeholders[1]
+
+title.text = "Global Phenomenon"
+
+tf = body.text_frame
+tf.text = "Pizza is enjoyed in almost every country around the world."
+p = tf.add_paragraph()
+p.text = "Each region has its own unique variations and preferences."
+p = tf.add_paragraph()
+p.text = "It's a versatile and customizable food that appeals to diverse tastes."
+p = tf.add_paragraph()
+p.text = "Pizza is a common choice for parties, gatherings, and casual meals."
+
+# Slide 7: Conclusion
+slide_layout = prs.slide_layouts[5] # Blank slide
 slide = prs.slides.add_slide(slide_layout)
 
 left = top = width = height = Inches(1)
-txBox = slide.shapes.add_textbox(left, top, width, height)
-tf = txBox.text_frame
 
-tf.text = "The Legend of Zelda continues to captivate audiences with its timeless adventures and compelling characters.  Thank you!"
+shape = slide.shapes.add_textbox(left, top, width*8, height)
+tf = shape.text_frame
+tf.text = "In conclusion, pizza is a delicious and globally loved dish with a rich history and endless possibilities!"
 tf.alignment = PP_ALIGN.CENTER
+p = tf.add_paragraph()
+p.text = "Thank you!"
+p.alignment = PP_ALIGN.CENTER
 
-for paragraph in tf.paragraphs:
-    paragraph.font.size = Pt(36)
-    paragraph.alignment = PP_ALIGN.CENTER
+# Guardar la presentacion
+prs.save("pizza_presentation.pptx")
 
-# Save the presentation
-prs.save("zelda_presentation.pptx")
-
-# Open the presentation using OS
-os.startfile("zelda_presentation.pptx")
+#Abrir el archivo
+import os
+os.startfile("pizza_presentation.pptx")

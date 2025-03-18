@@ -2,11 +2,14 @@ import google.generativeai as genai
 ## import playsound 
 import vosk 
 from vosk import Model, KaldiRecognizer
-import os,json,sys,queue,sounddevice
+from pytube import YouTube
+import os,json,sys,queue,sounddevice,requests
 ## import pyaudio
 import gtts
 import docx 
 import subprocess
+import yt_dlp
+
 
 class Asistente:
     def __init__(self, model_name: str,audio_path : str, vosk_path: str, key_word = "hola", config = {}, system_instrution = "", API = "", vosk_model_lang = "es"):
@@ -192,7 +195,72 @@ class Asistente:
             subprocess.run([sys.executable, "presentacion2.py"])
         except Exception as e:
             print(f"Error al crear la presentación: {e}")
-    
+    def escribe_una_nota(self,directorio_principal:str,carpeta:str,tema:str):
+        """
+            Descripcion:
+                genera un archivo txt con el tema que pida el usuario y lo guardas en donde te lo pida 
+
+            Args:
+                directorio_principal: Es el directorio principal donde se creara la carpeta
+                carpeta: Es el nombre de la carpeta
+                tema: Es el tema de la nota
+        
+        """
+        result = self.model.generate_content([f"Crea una nota sobre {tema}",""])
+        carpeta_nativa = os.path.join(os.path.expanduser("~"), carpeta)
+        carpeta_nota = os.path.join(carpeta_nativa, carpeta)
+        os.makedirs(carpeta_nota,exist_ok = True)
+        result = result.text.replace("#", "").replace("*", "")
+        with open(os.path.join(carpeta_nota, f"{tema}.txt"), "w", encoding="utf-8") as archivo:
+            archivo.write(result)
+        subprocess.run(['notepad', os.path.join(carpeta_nota, f"{tema}.txt")])
+    def buscar_un_video(self, busqueda:str):
+        """
+        Description:
+
+        Args:
+            Busqueda: es la busqueda qie el usuario quiere ver en youtube
+        
+        """
+        url = f"https:///www.googleapis.com/youtube/v3/searsh?part=snippet&q={busqueda}&type=video&key=AIzaSyDsEt3sZlvToXINjLU6PwVLxtpoWlXS1e0Resulst=1"
+        reply = requests.get(url)
+        data = reply.json()
+        if reply.status_code == 200:
+            print("Listo")
+            if "items" in data and len(data["items"]) > 0:
+                pass
+            video_id  = data["items"][0]["id"]["videoId"]
+            video_url = f"https://www.youtube.com/watch?v+{video_id}"
+        subprocess.run(['msedge', video_url])
+    def descargar_un_video(self,busqueda: str,ruta:str):
+        """
+        Descriptiopn:
+
+        Args:
+            busqueda: Es la busqueda del video que el usuario quiere descargar
+            ruta: Es la ruta donde se guardara el video
+        """
+        yid_ops= {
+            'format': 'bestvideo',
+            'outtml': f'{ruta}/%(title)s.%(ext)s',
+            'mergue_output_format': 'mp4'
+        }
+        try:
+            url = f"https:///www.googleapis.com/youtube/v3/searsh?part=snippet&q={busqueda}&type=video&key=AIzaSyDsEt3sZlvToXINjLU6PwVLxtpoWlXS1e0Resulst=1"
+            reply = requests.get(url)
+            data = reply.json()
+            if reply.status_code == 200:
+                print("Listo")
+                if "items" in data and len(data["items"]) > 0:
+                    pass
+                video_id  = data["items"][0]["id"]["videoId"]
+                video_url = f"https://www.youtube.com/watch?v+{video_id}"
+                with yt_dlp.YoutubeDL(yid_ops) as ydl:
+                    ydl.download([video_url])
+            subprocess.run(['msedge', video_url])
+        except
+
+
 gemini = Asistente("gemini-2.0-flash",
                     "audio.mp3",
                     "./models/vosk-model-small-es-0.42",
@@ -208,4 +276,4 @@ gemini = Asistente("gemini-2.0-flash",
                     API="AIzaSyDY1Ldl5_yOGcLzwbcj5gqe-LUNm4J--c0",   
                     vosk_model_lang="es", 
                     )
-gemini.crear_una_presentacion("the legend of zelda")
+gemini.descargar_un_video(f"https://www.youtube.com/watch?v=PtTm8DldGo0")
