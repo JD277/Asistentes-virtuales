@@ -1,0 +1,2 @@
+Este es el primer párrafo del archivo de texto. Contiene varias palabras de diferentes longitudes.
+Este es el segundo párrafo. Aquí también hay palabras largas como 'esternocleidomastoideo' y 'electroencefalografía'.
