@@ -240,7 +240,8 @@ class Asistente:
     def buscar_un_video(self, busqueda:str):
         """
         Description:
-
+            Esta funcion busca un video de youtube que pida el usuario, por ejemplo,
+            ¿Quiero el video sobre...? o ¿Quiero un video sobre...?
         Ags:
                 busqueda: Es la busqueda que el usuario quiere hacer en youtube
         """  
@@ -259,7 +260,7 @@ class Asistente:
     def descargar_un_video(self,video_url:str):
         """
         Description:
-
+            
     
         Args:
             video_url: Es al url del video que el usuario quiere descargar    
