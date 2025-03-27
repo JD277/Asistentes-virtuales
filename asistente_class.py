@@ -112,7 +112,7 @@ class Asistente:
                 print("Listo!")
                 return ""
 
-    def key_word(self):
+    def key_word(self,word):
         try:
             model = Model(self.vosk_path)
         except Exception as e:
@@ -138,10 +138,13 @@ class Asistente:
 
                 if recognizer.AcceptWaveform(data):
                     result = json.loads(recognizer.Result())["text"]
+                    if word in result:
+                        return True
                     
                 else:
                     partial = json.loads(recognizer.PartialResult())['partial']
-                print (partial)
+                    if word in result:
+                        return True
                         
                 # Check if silence has been detected for enough time
 
