@@ -106,7 +106,7 @@ class Asistente:
                 print("Listo!")
                 return ""
 
-    def key_word(self):
+    def key_word(self,word):
         try:
             model = Model(self.vosk_path)
         except Exception as e:
@@ -127,12 +127,12 @@ class Asistente:
 
                 if recognizer.AcceptWaveform(data):
                     result = json.loads(recognizer.Result())['text']
-                    silence_counter = 0
-                    final_text += f" {result}"
+                    if word in result:
+                        return True                   
                 else:
                     partial = json.loads(recognizer.PartialResult())['partial']
-                    print(partial)
-                    print(partial)
+                    if word in result:
+                        return True
                     
     def crear_un_proyecto_web(self, caracteristicas_pagina:str, nombre:str, ruta_proyecto:str):
         
