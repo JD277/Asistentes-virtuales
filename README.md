@@ -12,7 +12,7 @@
 
 ## Overview 
 
-​	Students developed this project from adakademy. The project's main goal was to create different models of AI using the API key of Gemini. Each model can answer some questions from the user and do all that with advanced technology, but only if it is related to their task, so, they decide that it is better to fusion those models into one. In addition, they used Vosk AI for local speech recognition, this improves the way to say questions to the model with better quality, making it easier.
+​	Students developed this project from adakademy. The project's main goal was to create different AI models using Gemini's API key. Each model can answer some questions from the user and do all that with advanced technology, but only if it is related to their task, so they decide that it is better to combine those models. In addition, they used Vosk AI for local speech recognition, this improves the way to say questions to the model with better quality, making it easier.
 
 The models demonstrate a good use of each, with a lot of creativity and productivity. Besides, some of them can be considered as a little shortcut depending on the model you use. Below, you will find a precise description of each model with its features.
 
@@ -64,7 +64,7 @@ The models demonstrate a good use of each, with a lot of creativity and producti
 
 
 
-1.Open the navigator:
+​	1.Open the navigator:
 
 ![image-20250401192346752](C:\Users\Juan\AppData\Roaming\Typora\typora-user-images\image-20250401192346752.png)
 
@@ -74,5 +74,16 @@ The models demonstrate a good use of each, with a lot of creativity and producti
 
 
 
+2. Search "Google AI studio" and then click on the button "Get API key."
+
+![image-20250402080557832](C:\Users\Juan\AppData\Roaming\Typora\typora-user-images\image-20250402080557832.png)
+
+3. Then you click on "Create API key," and then you have to wait a few seconds, so, the API can be generated.
+
+​	![image-20250402081117661](C:\Users\Juan\AppData\Roaming\Typora\typora-user-images\image-20250402081117661.png)
+
+4. Once your API key is loaded,  you have to click on "Copy," and then you paste it on your VS project
 
 
+
+​	  
