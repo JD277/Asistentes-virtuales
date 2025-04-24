@@ -9,7 +9,9 @@ import sounddevice
 from gtts import gTTS
 import subprocess
 import requests
-import requests
+from pytube import YouTube
+import yt_dlp
+
 
 
 class Asistente:
@@ -112,7 +114,7 @@ class Asistente:
                 print("Listo!")
                 return ""
     
-    def key_word(self):
+    def key_word(self, word:str):
         try:
             model = Model(self.vosk_path)
         except Exception as e:
@@ -138,7 +140,7 @@ class Asistente:
                     partial = json.loads(recognizer.PartialResult())['partial']
                     print(partial)
                     
-    def crear_un_proyecto_web(self, caracteristicas_pagina:str, nombre:str, ruta_proyecto:str):
+    def crear_un_proyecto_web(self, caracteristicas_pagina: str, nombre: str, ruta_proyecto: str):
         """
         Description:
         Crea un proyecto web básico con una página HTML generada dinámicamente a partir de las características proporcionadas.
@@ -242,7 +244,7 @@ class Asistente:
         Description:
         Esta funcion busca un video en youtube cuando el usuario dice "busca un video"
         """
-        url = f"https://www.googlepis.com/youtbe/v3/search?part=snippet&q={busqueda}&type=video&key=AIzaSyBp-EGz2ViQpmVvBZhUOcog4SQmimixWtc&maxResults=1"
+        url = f"https://www.googleapis.com/youtbe/v3/search?part=snippet&q={busqueda}&type=video&key=AIzaSyBp-EGz2ViQpmVvBZhUOcog4SQmimixWtc&maxResults=1"
         reply = requests.get(url)
         data = reply.json()
         if reply.status_code == 200:
@@ -253,8 +255,38 @@ class Asistente:
         video_url = f"https://www.youtube.com/watch?v={id}"
         subprocess.run(['msedge', video_url])
         
+    def descargar_un_video(self,video_url:str):
+        """
+        description:
+        Esta función permite descargar videos de YouTube a partir de su URL, 
+        con opciones para seleccionar el formato, la calidad y la ubicación 
+        de guardado.
 
+    
+        Args:
+            video_url: Es al url del video que el usuario quiere descargar    
+        """
+
+        yld_ops = {
+            'format': ' bestvideo',
+            'outtmpl': f'{ruta}/%(title)s.%(ext)s',
+            'mergue_output_format': 'mp4'
+        }
+        try:
+            print("iniciando")      
+            url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={busqueda}&type=video&key=AIzaSyC5cxHnowJ54rkppj8TMaRvD8HD8dnx6Ew&maxResults=1"
+            reply = requests.get(url)
+            data = reply.json()
+            if reply.status_code == 200:
+                print("Listo")
+                if "items" in data and len(data["items"]) > 0:
+                    video_id = data["items"][0]["videoId"]
+                    video_url = f"https://www.youtube.com/watch?v={id}"
+                    with yt_dlp.YoutubeDL(yld_ops) as ydl:
+                        ydl.download([video_url]) 
+        except Exception as e:
+            print("Error al descargar el video")
 
 gemini = Asistente("gemini-2.0-flash", "audio.mp3", "./models/vosk-model-small-es-0.42", "hola", config={"temperature":0.8,"top_p":0.95, "top_k":64, "max_output_tokens":8192, "response_mime_type": "text/plain"}, system_instruccion="", API="AIzaSyDY1Ldl5_yOGcLzwbcj5gqe-LUNm4J--c0", vosk_model_lang="es")
 
-gemini.escribir_una_nota("deskop", "", "top 10 de las mejores IA para programar")
+gemini.buscar_un_video("como hacer una pizza")
