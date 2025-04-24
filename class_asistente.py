@@ -128,11 +128,12 @@ class Asistente:
 
                 if recognizer.AcceptWaveform(data):
                     result = json.loads(recognizer.Result())['text']
-                    silence_counter = 0.0
-                    final_tet += f" {result}"
+                    if word in result:
+                        return True
                 else:
                     partial = json.loads(recognizer.PartialResult())['partial']
-                    print(partial)
+                    if word in result:
+                        return True
                    
     def create_a_web_proyect(self,caracteristicas_pagina:str, nombre:str,ruta_proyecto:str):
         """
@@ -261,6 +262,7 @@ class Asistente:
         except
 
 
+
 gemini = Asistente("gemini-2.0-flash",
                     "audio.mp3",
                     "./models/vosk-model-small-es-0.42",
@@ -276,4 +278,4 @@ gemini = Asistente("gemini-2.0-flash",
                     API="AIzaSyDY1Ldl5_yOGcLzwbcj5gqe-LUNm4J--c0",   
                     vosk_model_lang="es", 
                     )
-gemini.descargar_un_video(f"https://www.youtube.com/watch?v=PtTm8DldGo0")
+
