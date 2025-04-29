@@ -75,50 +75,55 @@ This Wizard uses libraries that you will need to install in order to use it:
 
 The asistente class contains the following methods which are the functions that the asistente has:
 
-|                           Methods                            |                             Arg                              |                   Return                    |                         Description                          |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :-----------------------------------------: | :----------------------------------------------------------: |
-| ![image-20250327190452849](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250327190452849.png)‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ | ![image-20250327191051445](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250327191051445.png) the prompt of the user |       a plain str with that ai answer       | Generates a Gemini AI response based on the input prompt or text. |
-| ![image-20250327190729572](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250327190729572.png) | ![image-20250327191104138](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250327191104138.png) receives a string and converts it to audio |                  **None**                   | this is a function that use gTTS to convert the text to an audio and later play it with playsound |
-| ![image-20250327192335827](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250327192335827.png) |                           **None**                           | a string with the audio that the user sends |    transcribes what the user asks or says to the asistant    |
-| <br />![](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250401183304387.png)‎ ‎  ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎  ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ | <br />![image-20250401182509430](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250401182509430.png) is the keyword that is going to be detected |            <br /><br />**None**             | It is a function that detects a keyword to activate the code. |
-| <br /><br /><br /><br /><br /><br /><br />![image-20250401184123300](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250401184123300.png) | ![image-20250401184332384](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250401184332384.png)Detailed description of the features and theme of the website you want to create<br />![image-20250401184620632](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250401184620632.png) Name of the project and the main folder to be created<br />![image-20250401185024372](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250401185024372.png)Path where the project folder will be created |   <br /><br /><br /><br /><br />**None**    | Creates a basic web project with a dynamically generated HTML page based on the provided features. The function generates a folder structure at the specified path, creates an `index.html` file with the HTML, CSS (using Bootstrap v5.3), and JavaScript code, and automatically opens the file in the code editor and the default browser. The web page is responsive, includes Bootstrap components such as a navbar, cards, modals, carousel, and more, and uses external images embedded directly from URLs. |
-|                                                              |                                                              |                                             |                                                              |
-|                                                              |                                                              |                                             |                                                              |
-|                                                              |                                                              |                                             |                                                              |
+| Method                     | Arguments                     | Returns               | Description                                                                 |
+|----------------------------|-------------------------------|-----------------------|-----------------------------------------------------------------------------|
+| ![alt text](imgs/image.png)                 | text                        | text                | Answers any questions the user asks                                         |
+| ![alt text](imgs/image-1.png)                   | text                        | audio               | Converts the given text to speech for the user to hear                      |
+| ![alt text](imgs/image-2.png)             | None                        | text                | Returns a transcript of the user's speech input                             |
+| ![alt text](imgs/image-3.png)                | None                        | None                | Listens passively and only reacts when a specific keyword is detected       |
+| ![alt text](imgs/image-4.png)       | features, name, projectPath | Web project         | Generates HTML code for a themed webpage and opens it in VSCode             |
+| ![alt text](imgs/image-5.png)         | features, name, projectPath | Word Document       | Creates a Word document on the specified theme                              |
+| ![alt text](imgs/image-6.png)     | theme                       | PPTX presentation   | Generates a PowerPoint presentation on the chosen topic                     |
+| ![alt text](imgs/image-7.png)              | directory, folder, theme    | text file           | Creates a Notepad file with notes on the specified topic                    |
+| ![alt text](imgs/image-8.png)            | searchQuery                 | YouTube link        | Finds the first YouTube video for the query and opens it in the browser     |
+| ![alt text](imgs/image-9.png)          | searchQuery, savePath       | video file          | Downloads the first YouTube video found for the given search query          |
 
 ## Getting Started
 
 **Step 1:** Open you browswer
 
-![image-20250401192035321](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250401192035321.png)
+![image-20250401192035321](imgs/img1.png)
 
 **Step 2:** search "Google AI Studio"
 
-![image-20250401192245484](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250401192245484.png)
+![image-20250401192245484](imgs/img2.png)
 
 **Step 3:** sign in in your Google account
 
-![image-20250401192443825](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250401192443825.png)
+![image-20250401192443825](imgs/img3.png)
 
 **Step 4:** Click on "Get API key"
 
-![image-20250402181153199](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250402181153199.png)
+![image-20250402181153199](imgs/img4.png)
 
 **Step 5:** Click on "Create API key" or "Crear clave de API"
 
-![image-20250402181400434](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250402181400434.png)
+![image-20250402181400434](imgs/img5.png)
 
-**Step 6:** Click on "Gemini API"
+**Step 6:** Click on "Gemini API" or in the name of your project
 
-![image-20250402181519051](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250402181519051.png)
+![image-20250402181519051](imgs/img6.png)
 
 **Step 7:** Finally, click on create API key
 
-![image-20250402181716869](C:\Users\josep\AppData\Roaming\Typora\typora-user-images\image-20250402181716869.png)
+![image-20250402181716869](imgs/img7.png)
 
-## Donations
+and that's it, now you have your Gemini API key.
 
-PLEASE GIVE ME MONEY I'M POOR : ,(
-
-Pago movil: 
+## 💖 Support the Project
+If you find this project useful, consider supporting it through donations. Your contributions help maintain and improve the project!
+### **Donation Methods:**
+- Pago Movil
+- Paypal
+- Crypto
 
